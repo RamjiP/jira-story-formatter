@@ -79,10 +79,22 @@ function getJiraContent(formValues) {
     return content;
 }
 
+function copyText() {
+     /* Get the text field */
+  var copyText = document.getElementById("result");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+}
+
 function HtmlViewer(props) {
   console.log(props.formValues);
   return (
-    <div style={{ 'alignSelf': 'flex-start', 'flex': '1 auto' }}>
+    <div style={{ 'alignSelf': 'flex-start', 'flex': '1 auto', 'padding': '8px' }}>
       {props.formValues.map((value, indx) => {
         return value.value ? (
           <PanelView key={indx} title={value.title} value={value.value}></PanelView>
@@ -90,8 +102,8 @@ function HtmlViewer(props) {
           value.map((v, i) => <PanelView key={indx + '-' + i} title={v.title} value={v.value}></PanelView>)
         ) : null;
       })}
-
-      <textarea value={getJiraContent(props.formValues)} rows="25" ></textarea>
+      <button style={{width:'auto'}} onClick={() => copyText()}>Copy text</button>
+      <textarea id='result' value={getJiraContent(props.formValues)} rows="25" style={{'width': '100%'}} readOnly></textarea>
     </div>
   );
 }

@@ -58,7 +58,7 @@ function Scenarios(props) {
           </div>
         );
       })}
-      <button onClick={() => addUseCase()}>+ Add new scenario</button>
+      <button onClick={() => addUseCase()} style={{width: 'auto'}}>+ Add new scenario</button>
     </div>
   );
 }
