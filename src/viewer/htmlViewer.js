@@ -5,9 +5,9 @@ import config from '../formatter/config';
 function ListView(props) {
   switch (props.contentType) {
     case contentTypes.UNORDERED_LIST:
-      return <ul>{props.value ? props.value.split('\n').map((v, indx) => <li key={indx}>{v}</li>) : null}</ul>;
+      return <ul>{props.value ? props.value.split('\n\n').map((v, indx) => <li key={indx}>{v.split('\n').map(l => <span>{l}<br/></span>)}</li>) : null}</ul>;
     case contentTypes.ORDERED_LIST:
-      return <ol>{props.value ? props.value.split('\n').map((v, indx) => <li key={indx}>{v}</li>) : null}</ol>;
+      return <ol>{props.value ? props.value.split('\n\n').map((v, indx) => <li key={indx}>{v.split('\n').map(l => <span>{l}<br/></span>)}</li>) : null}</ol>;
     default:
       return <span>{props.value ? props.value : null}</span>;
   }
@@ -40,17 +40,17 @@ function getMultiLineTextContent(value) {
     let join = '';
     switch(value.contentType) {
         case contentTypes.ORDERED_LIST:
-            join = '#  ';
+            join = '# ';
             break;
         case contentTypes.UNORDERED_LIST:
-            join = '-';
+            join = '* ';
             break;
         default:
             join = '';
             break;
     }
-    for(const val of value.value.split('\n')) {
-        content += `${join}${val}\n`;
+    for(const val of value.value.split('\n\n')) {
+        content += `${join}${val}\n\n`;
     }
     return content;
 }
@@ -61,7 +61,7 @@ function getPanelContent(value) {
     for(const v of value.value) {
         content += getMultiLineTextContent(v);
     }
-    content += '{pane}\n';
+    content += '{panel}\n';
     return content;
 
 }
